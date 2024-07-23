@@ -44,7 +44,6 @@ extern boolean highcolor;
 /**	\brief setup video mode
 */
 void I_StartupGraphics(void);
-void I_StartupHardwareGraphics(void);
 
 /**	\brief restore old video mode
 */
@@ -85,7 +84,6 @@ INT32 VID_GetModeForSize(INT32 w, INT32 h);
 	\return	currect video mode
 */
 INT32 VID_SetMode(INT32 modenum);
-void VID_CheckRenderer(void);
 
 /**	\brief	The VID_GetModeName function
 

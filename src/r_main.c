@@ -19,7 +19,6 @@
 #include "r_local.h"
 #include "r_splats.h" // faB(21jan): testing
 #include "r_sky.h"
-#include "hu_stuff.h"
 #include "st_stuff.h"
 #include "p_local.h"
 #include "keys.h"
@@ -29,7 +28,6 @@
 #include "d_main.h"
 #include "v_video.h"
 #include "p_spec.h" // skyboxmo
-#include "p_setup.h"
 #include "z_zone.h"
 #include "m_random.h" // quake camera shake
 
@@ -1339,27 +1337,6 @@ void R_RenderPlayerView(player_t *player)
 		skyVisible1 = skyVisible;
 }
 
-// Jimita
-#ifdef HWRENDER
-void R_InitHardwareMode(void)
-{
-	HWR_AddCommands();
-	if (gamestate == GS_LEVEL)
-	{
-		HWR_SetupLevel();
-		HWR_PrepLevelCache(numtextures);
-	}
-}
-#endif
-
-void R_ReloadHUDGraphics(void)
-{
-	CONS_Debug(DBG_RENDER, "R_ReloadHUDGraphics()...\n");
-	ST_LoadGraphics();
-	HU_LoadGraphics();
-	ST_ReloadSkinFaceGraphics();
-}
-
 // =========================================================================
 //                    ENGINE COMMANDS & VARS
 // =========================================================================
@@ -1434,7 +1411,7 @@ void R_RegisterEngineStuff(void)
 #endif
 
 #ifdef HWRENDER
-	if (rendermode == render_opengl)
+	if (rendermode != render_soft && rendermode != render_none)
 		HWR_AddCommands();
 #endif
 }
